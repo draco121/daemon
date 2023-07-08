@@ -1,0 +1,43 @@
+{
+    "id":"1234",
+    "name":"Sample config",
+    "version":"1",
+    "description":"A sample configuration file",
+    "cronstring":"*/5 * * * *",
+    "folders":[
+        {
+            "path":"C:/ProgramData/Adobe",
+            "name":"adobe",
+            "description":"folder where adobe common data is stored"
+        },
+        {
+            "path":"C:/ProgramData/chocolatey",
+            "name":"chocolatey",
+            "description":"folder where adobe common data is stored"
+        },
+        {
+            "path":"C:/ProgramData/hp",
+            "name":"hp",
+            "description":"folder where adobe common data is stored"
+        },
+        {
+            "path":"C:/ProgramData/intel",
+            "name":"intel",
+            "description":"folder where adobe common data is stored"
+        }
+    ],
+    "files":[
+        {
+            "path":"D:/useful documents/DraftPrint.pdf",
+            "name":"hp",
+            "description":"folder where adobe common data is stored"
+        }
+    ],
+    "commands":[
+        {
+            "script":"hostname",
+            "name":"gethostname",
+            "description":"command to get hostname of computer"
+        }
+    ]
+}
