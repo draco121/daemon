@@ -1,14 +1,31 @@
 package utils
 
 import (
-	"bytes"
 	"errors"
 	"fmt"
 	"io/fs"
 	"os"
 	"path"
+	"path/filepath"
+	"strings"
 	"time"
 )
+
+func GetRootDir() string {
+	CacheDir, err := os.UserCacheDir()
+	if err != nil {
+		panic(err)
+	}
+	AppDir := path.Join(CacheDir, "shak-daemon")
+	_, err = os.Stat(AppDir)
+	if errors.Is(err, fs.ErrNotExist) {
+		err = os.MkdirAll(AppDir, os.ModeDir)
+		if err != nil {
+			panic(err)
+		}
+	}
+	return AppDir
+}
 
 func GetFolderDumpDir(BundleName string) string {
 	dir := path.Join(RootDir, BundleName, "folders")
@@ -70,10 +87,6 @@ func GetBundleArchivePath(BundleName string) string {
 	return path.Join(RootDir, BundleName+".tar.gzip")
 }
 
-func GetCronString() string {
-	cronstring, err := os.ReadFile(path.Join(RootDir, "cronstring.txt"))
-	if err != nil {
-		panic(err)
-	}
-	return bytes.NewBuffer(cronstring).String()
+func GetRelativeLogPath(file string) string {
+	return strings.TrimPrefix(filepath.ToSlash(file), RootDir+"/")
 }

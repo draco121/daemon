@@ -20,7 +20,7 @@ type Command struct {
 }
 
 type Spec struct {
-	Id          string
+	Id          string `json:"_id"`
 	Name        string
 	Version     string
 	Description string

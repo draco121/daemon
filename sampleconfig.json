@@ -3,7 +3,7 @@
     "name":"Sample config",
     "version":"1",
     "description":"A sample configuration file",
-    "cronstring":"*/5 * * * *",
+    "cronstring":"*/10 * * * *",
     "folders":[
         {
             "path":"C:/ProgramData/Adobe",

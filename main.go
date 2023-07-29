@@ -1,12 +1,13 @@
 package main
 
-import "shak-daemon/services"
+import (
+	"shak-daemon/schedulers"
+	"time"
+)
 
 func main() {
-	// scheduler := schedulers.NewScheduler()
-	// scheduler.ScheduleDiagnostics()
-	// scheduler.StartSchedulers()
-	// time.Sleep(time.Minute * 20)
-	diagnostics := services.NewDiagnosticsService()
-	diagnostics.Process()
+	scheduler := schedulers.NewScheduler()
+	scheduler.ScheduleDiagnostics()
+	scheduler.StartSchedulers()
+	time.Sleep(time.Minute * 30)
 }
