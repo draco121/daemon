@@ -188,8 +188,6 @@ func CleanUpAction(BundleName string) {
 	fmt.Println("cleaning up working directory...")
 	bundlePath := utils.GetBundleDir(BundleName)
 	bundleArchivePath := utils.GetBundleArchivePath(BundleName)
-	cmd := exec.Command("rm", "-rf", bundlePath)
-	cmd.Run()
-	cmd = exec.Command("rm", "-rf", bundleArchivePath)
-	cmd.Run()
+	os.RemoveAll(bundlePath)
+	os.RemoveAll(bundleArchivePath)
 }
