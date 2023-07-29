@@ -4,26 +4,38 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"log"
 	"os"
 	"os/exec"
 	"path"
+	httpclient "shak-daemon/httpClient"
 	"shak-daemon/models"
 	"shak-daemon/utils"
 	"strings"
 )
 
-func UpdateSpecAction(configPath string, spec *models.Spec) {
-	configJson, err := os.ReadFile(configPath)
+func UpdateSpecAction() {
+	fmt.Println("syncing spec from server..........")
+	newSpec := models.Spec{}
+	httpclient.GetLatestSpec(&newSpec)
+	buf, err := json.Marshal(newSpec)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
-	err = json.Unmarshal(configJson, &spec)
+	file, err := os.Create(utils.SpecDir)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
+	defer file.Close()
+	_, err = file.Write(buf)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("spec synced successfully...........")
 }
 
 func InspectFolderAction(spec *models.Spec, report *models.Report) error {
+	fmt.Println("inspecting the folders from spec ...........")
 	folders := spec.Folders
 	if len(folders) == 0 {
 		folderReport := models.FolderReport{
@@ -70,7 +82,9 @@ func InspectFolderAction(spec *models.Spec, report *models.Report) error {
 					fileCount++
 					if strings.HasSuffix(info.Name(), ".log") {
 						logFileCount++
-						folderReport.LogFilePaths = append(folderReport.LogFilePaths, path.Join(folders[i].Path, files[j]))
+						absLogPath := path.Join(folders[i].Path, files[j])
+						relLogPath := utils.GetRelativeLogPath(absLogPath)
+						folderReport.LogFilePaths = append(folderReport.LogFilePaths, relLogPath)
 					}
 				}
 			}
@@ -84,10 +98,12 @@ func InspectFolderAction(spec *models.Spec, report *models.Report) error {
 			return err
 		}
 	}
+	fmt.Println("folder inspection completed .......")
 	return nil
 }
 
 func InspectFileAction(spec *models.Spec, report *models.Report) error {
+	fmt.Println("inspecting files from the spec ................")
 	files := spec.Files
 	if len(files) == 0 {
 		fileReport := models.FileReport{
@@ -114,10 +130,12 @@ func InspectFileAction(spec *models.Spec, report *models.Report) error {
 			}
 		}
 	}
+	fmt.Println("file inspection completed ...........")
 	return nil
 }
 
 func RunCommandAction(spec *models.Spec, report *models.Report) error {
+	fmt.Println("running commands in system .........")
 	commands := spec.Commands
 	if len(commands) == 0 {
 		commandReport := models.CommandReport{
@@ -149,16 +167,25 @@ func RunCommandAction(spec *models.Spec, report *models.Report) error {
 			return err
 		}
 	}
+	fmt.Println("commands execution completed .....")
 	return nil
 }
 
-func CreateArchiveAction(BundleName string) error {
+func CreateArchiveAction(BundleName string) (string, error) {
+	fmt.Println("creating bundle archive........")
 	bundlePath := utils.GetBundleDir(BundleName)
 	bundleArchivePath := utils.GetBundleArchivePath(BundleName)
-	return utils.Archive(bundlePath, bundleArchivePath)
+	err := utils.Archive(bundlePath, bundleArchivePath)
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println("bundle archive created ......")
+	}
+	return bundleArchivePath, err
 }
 
 func CleanUpAction(BundleName string) {
+	fmt.Println("cleaning up working directory...")
 	bundlePath := utils.GetBundleDir(BundleName)
 	bundleArchivePath := utils.GetBundleArchivePath(BundleName)
 	cmd := exec.Command("rm", "-rf", bundlePath)

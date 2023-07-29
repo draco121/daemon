@@ -1,6 +1,7 @@
 package services
 
 import (
+	"fmt"
 	"shak-daemon/actions"
 	httpclient "shak-daemon/httpClient"
 	"shak-daemon/models"
@@ -15,7 +16,7 @@ type Diagnostics struct {
 
 func NewDiagnosticsService() Diagnostics {
 	spec := models.Spec{}
-	httpclient.GetLatestSpec("./sampleconfig.json", &spec)
+	httpclient.GetLatestSpec(&spec)
 	report := models.Report{
 		SpecId:      spec.Id,
 		GeneratedAt: time.Now().Format(time.RFC3339),
@@ -30,10 +31,15 @@ func NewDiagnosticsService() Diagnostics {
 }
 
 func (d *Diagnostics) Process() {
+	fmt.Println("==============starting daemon job=============")
 	actions.InspectFolderAction(&d.Spec, &d.Report)
 	actions.InspectFileAction(&d.Spec, &d.Report)
 	actions.RunCommandAction(&d.Spec, &d.Report)
-	actions.CreateArchiveAction(d.Report.BundleName)
+	fmt.Println(d.Report)
+	archivePath, _ := actions.CreateArchiveAction(d.Report.BundleName)
+	httpclient.SendReport(&d.Report)
+	httpclient.UploadBundle(archivePath)
 	//TODO:create an http client to push the bundles and reports to the server
 	actions.CleanUpAction(d.Report.BundleName)
+	actions.UpdateSpecAction()
 }

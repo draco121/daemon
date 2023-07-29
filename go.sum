@@ -1,8 +1,9 @@
+github.com/ddliu/go-httpclient v0.7.1 h1:COWYBalfbaFNe6e0eQU38++vCD5kzLh1H1RFs3xcn9g=
+github.com/ddliu/go-httpclient v0.7.1/go.mod h1:uwipe9x9SYGk4JhBemO7+dD87QbiY224y0DLB9OY0Ik=
 github.com/otiai10/copy v1.12.0 h1:cLMgSQnXBs1eehF0Wy/FAGsgDTDmAqFR7rQylBb1nDY=
 github.com/otiai10/copy v1.12.0/go.mod h1:rSaLseMUsZFFbsFGc7wCJnnkTAvdc5L6VWxPE4308Ww=
-github.com/robfig/cron v1.2.0 h1:ZjScXvvxeQ63Dbyxy76Fj3AT3Ut0aKsyd2/tl3DTMuQ=
-github.com/robfig/cron v1.2.0/go.mod h1:JGuDeoQd7Z6yL4zQhZ3OPEVHB7fL6Ka6skscFHfmt2k=
-github.com/walle/targz v0.0.0-20140417120357-57fe4206da5a h1:6cKSHLRphD9Fo1LJlISiulvgYCIafJ3QfKLimPYcAGc=
-github.com/walle/targz v0.0.0-20140417120357-57fe4206da5a/go.mod h1:nccQrXCnc5SjsThFLmL7hYbtT/mHJcuolPifzY5vJqE=
+github.com/otiai10/mint v1.5.1 h1:XaPLeE+9vGbuyEHem1JNk3bYc7KKqyI/na0/mLd/Kks=
+github.com/robfig/cron/v3 v3.0.1 h1:WdRxkvbJztn8LMz/QEvLN5sBU+xKpSqwwUO1Pjr4qDs=
+github.com/robfig/cron/v3 v3.0.1/go.mod h1:eQICP3HwyT7UooqI/z+Ov+PtYAWygg1TEWWzGIFLtro=
 golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8 h1:0A+M6Uqn+Eje4kHMK80dtF3JCXC4ykBgQG4Fe06QRhQ=
 golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=

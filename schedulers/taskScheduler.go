@@ -2,8 +2,9 @@ package schedulers
 
 import (
 	"shak-daemon/services"
+	"shak-daemon/utils"
 
-	"github.com/robfig/cron"
+	"github.com/robfig/cron/v3"
 )
 
 type Scheduler struct {
@@ -21,7 +22,8 @@ func NewScheduler() Scheduler {
 func (s *Scheduler) ScheduleDiagnostics() error {
 	s.c.Stop()
 	diagnostics := services.NewDiagnosticsService()
-	return s.c.AddFunc(diagnostics.Spec.CronString, diagnostics.Process)
+	_, err := s.c.AddFunc(utils.CronString, diagnostics.Process)
+	return err
 }
 
 func (s *Scheduler) StartSchedulers() {
