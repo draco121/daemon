@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/exec"
 	"path"
+	"runtime"
 	httpclient "shak-daemon/httpClient"
 	"shak-daemon/models"
 	"shak-daemon/utils"
@@ -150,7 +151,13 @@ func RunCommandAction(spec *models.Spec, report *models.Report) error {
 			Name:        commands[i].Script,
 			Description: commands[i].Description,
 		}
-		cmd, err := exec.Command("powershell.exe", "iex", commands[i].Script).Output()
+		shell := ""
+		if runtime.GOOS == "windows" {
+			shell = "powershell.exe iex"
+		} else {
+			shell = "/bin/bash -c"
+		}
+		cmd, err := exec.Command(shell, commands[i].Script).Output()
 		if err != nil {
 			commandReport.Error = "error occurred while executing the command: " + err.Error()
 		} else {
