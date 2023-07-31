@@ -12,4 +12,3 @@ const Password = "Pa$$w0rd123!"
 
 var Token = ""
 var SpecDir = path.Join(RootDir, "spec.json")
-var SpecSourceDir = "./sampleconfig.json"

@@ -153,7 +153,7 @@ func RunCommandAction(spec *models.Spec, report *models.Report) error {
 		}
 		shell := ""
 		if runtime.GOOS == "windows" {
-			shell = "powershell.exe iex"
+			shell = "pwsh iex"
 		} else {
 			shell = "/bin/bash -c"
 		}
