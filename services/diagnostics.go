@@ -19,6 +19,7 @@ func NewDiagnosticsService() Diagnostics {
 	httpclient.GetLatestSpec(&spec)
 	report := models.Report{
 		SpecId:      spec.Id,
+		AppId:       utils.AppId,
 		GeneratedAt: time.Now().Format(time.RFC3339),
 		BundleName:  utils.GetBundleName(),
 		HostName:    utils.GetHostName(),
