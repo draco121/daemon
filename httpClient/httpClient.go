@@ -59,7 +59,7 @@ func GetLatestSpec(spec *models.Spec) {
 	}
 	err = json.Unmarshal(bodyBytes, &spec)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 }
 
