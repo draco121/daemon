@@ -83,9 +83,7 @@ func InspectFolderAction(spec *models.Spec, report *models.Report) error {
 					fileCount++
 					if strings.HasSuffix(info.Name(), ".log") {
 						logFileCount++
-						absLogPath := path.Join(folders[i].Path, files[j])
-						relLogPath := utils.GetRelativeLogPath(absLogPath)
-						folderReport.LogFilePaths = append(folderReport.LogFilePaths, relLogPath)
+						folderReport.LogFilePaths = append(folderReport.LogFilePaths, files[j])
 					}
 				}
 			}
