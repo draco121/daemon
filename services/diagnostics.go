@@ -18,11 +18,12 @@ func NewDiagnosticsService() Diagnostics {
 	spec := models.Spec{}
 	httpclient.GetLatestSpec(&spec)
 	report := models.Report{
-		SpecId:      spec.Id,
-		AppId:       utils.AppId,
-		GeneratedAt: time.Now().Format(time.RFC3339),
-		BundleName:  utils.GetBundleName(),
-		HostName:    utils.GetHostName(),
+		SpecId:       spec.Id,
+		AppId:        utils.AppId,
+		BundleStatus: "fresh",
+		GeneratedAt:  time.Now().Format(time.RFC3339),
+		BundleName:   utils.GetBundleName(),
+		HostName:     utils.GetHostName(),
 	}
 	diagnostics := Diagnostics{
 		Spec:   spec,
