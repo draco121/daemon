@@ -73,7 +73,7 @@ func InspectFolderAction(spec *models.Spec, report *models.Report) error {
 		}
 		fileCount, folderCount, logFileCount := 0, 0, 0
 		for j := 0; j < len(files); j++ {
-			info, err := os.Stat(path.Join(folders[i].Path, dir.Name(), files[j]))
+			info, err := os.Stat(path.Join(folders[i].Path, files[j]))
 			if err != nil {
 				continue
 			} else {
@@ -83,7 +83,7 @@ func InspectFolderAction(spec *models.Spec, report *models.Report) error {
 					fileCount++
 					if strings.HasSuffix(info.Name(), ".log") {
 						logFileCount++
-						relPath := path.Join(report.BundleName, files[j])
+						relPath := path.Join(report.BundleName, dir.Name(), files[j])
 						folderReport.LogFilePaths = append(folderReport.LogFilePaths, relPath)
 					}
 				}
