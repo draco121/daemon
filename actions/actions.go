@@ -150,12 +150,15 @@ func RunCommandAction(spec *models.Spec, report *models.Report) error {
 			Description: commands[i].Description,
 		}
 		shell := ""
+		args := ""
 		if runtime.GOOS == "windows" {
-			shell = "pwsh iex"
+			shell = "powershell.exe"
+			args = "iex"
 		} else {
-			shell = "/bin/bash -c"
+			shell = "/bin/bash"
+			args = "-c"
 		}
-		cmd, err := exec.Command(shell, commands[i].Script).Output()
+		cmd, err := exec.Command(shell, args, commands[i].Script).Output()
 		if err != nil {
 			commandReport.Error = "error occurred while executing the command: " + err.Error()
 		} else {

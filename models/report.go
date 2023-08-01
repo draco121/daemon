@@ -8,7 +8,7 @@ type FolderReport struct {
 	FileCount    int      `json:"fileCount"`
 	FolderCount  int      `json:"folderCount"`
 	LogFileCount int      `json:"logFileCount"`
-	LogFilePaths []string `json:"logFilepaths"`
+	LogFilePaths []string `json:"logFilePaths"`
 	Error        string   `json:"error"`
 }
 

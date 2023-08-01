@@ -16,15 +16,7 @@ type Diagnostics struct {
 
 func NewDiagnosticsService() Diagnostics {
 	spec := models.Spec{}
-	httpclient.GetLatestSpec(&spec)
-	report := models.Report{
-		SpecId:       spec.Id,
-		AppId:        utils.AppId,
-		BundleStatus: "fresh",
-		GeneratedAt:  time.Now().Format(time.RFC3339),
-		BundleName:   utils.GetBundleName(),
-		HostName:     utils.GetHostName(),
-	}
+	report := models.Report{}
 	diagnostics := Diagnostics{
 		Spec:   spec,
 		Report: report,
@@ -34,6 +26,15 @@ func NewDiagnosticsService() Diagnostics {
 
 func (d *Diagnostics) Process() {
 	fmt.Println("==============starting daemon job=============")
+	httpclient.GetLatestSpec(&d.Spec)
+	d.Report = models.Report{
+		SpecId:       d.Spec.Id,
+		AppId:        utils.AppId,
+		BundleStatus: "fresh",
+		GeneratedAt:  time.Now().Format(time.RFC3339),
+		BundleName:   utils.GetBundleName(),
+		HostName:     utils.GetHostName(),
+	}
 	actions.InspectFolderAction(&d.Spec, &d.Report)
 	actions.InspectFileAction(&d.Spec, &d.Report)
 	actions.RunCommandAction(&d.Spec, &d.Report)
