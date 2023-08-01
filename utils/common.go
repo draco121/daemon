@@ -6,8 +6,6 @@ import (
 	"io/fs"
 	"os"
 	"path"
-	"path/filepath"
-	"strings"
 	"time"
 )
 
@@ -85,8 +83,4 @@ func GetBundleDir(BundleName string) string {
 
 func GetBundleArchivePath(BundleName string) string {
 	return path.Join(RootDir, BundleName+".tar.gzip")
-}
-
-func GetRelativeLogPath(file string) string {
-	return strings.TrimPrefix(filepath.ToSlash(file), RootDir+"/")
 }
